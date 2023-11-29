@@ -18,7 +18,9 @@ $(document).ready(function () {
       var userInput = $(this).siblings('.description').val();
       //Input is saved to local storage for the entered time-block
       localStorage.setItem(clickedTimeBlockId, userInput);
-      //
+
+      showAlert("Saved to Local Storage")
+
       console.log("Save", clickedTimeBlockId, userInput);
     });
     
@@ -37,6 +39,19 @@ $(document).ready(function () {
       }
     });
   }
+
+  function showAlert(message) {
+    // Display the alert in the header
+    $("#currentDay").append('<div class="alert alert-success" role="alert">' + message + '</div>');
+    //Timeout the alert
+    setTimeout(function() {
+      $(".alert").remove();
+      //Remove after 1 second
+    }, 1000);
+  }
+
+
+
 
   //Display current time and date 
   displayCurrentDateTime();
