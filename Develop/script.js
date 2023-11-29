@@ -3,22 +3,46 @@
 // in the html.
 $(document).ready(function () {
 
-  // Display the current date and time down to the second in the header.
+  // Display the current date and time in the header.
   function displayCurrentDateTime() {
 
     var currentDateTime = dayjs().format("dddd, MMMM D YYYY h:mm:ss A");
     $("#currentDay").text(currentDateTime);
   }
-
-  // Call the function to display the current date and time.
-  displayCurrentDateTime();
-
-    // Add a listener for click events on the save button.
-    $(".saveBtn").on("click", function() {
-      console.log("Save");
-    });
   
+  // Add a listener for click events on the save button.
+    $(".saveBtn").on("click", function() {
+      //Locate the ID of the time-block associated with the save button
+      var clickedTimeBlockId = $(this).parent(".time-block").attr('id');
+      //Get the user input from the description box within the clicked time-block
+      var userInput = $(this).siblings('.description').val();
+      //Input is saved to local storage for the entered time-block
+      localStorage.setItem(clickedTimeBlockId, userInput);
+      //
+      console.log("Save", clickedTimeBlockId, userInput);
+    });
+    
+    // Function to load user input from local storage.
+    function userInputInLocalStorage() {
+      //Loop each element in the time-block
+      $(".time-block").each(function() {
+        //Get ID attribute of the current element in the time-block
+        var timeBlockId = $(this).attr('id');
+        //Retrieve user input for hour of the day (timeBlockId)
+        var userInput = localStorage.getItem(timeBlockId);
+      //If user input is NOT empty then...
+    if (userInput !== null) {
+        //Insert the saved input (value) into the description box within the current time block
+        $(this).find('.description').val(userInput);
+      }
+    });
+  }
 
+  //Display current time and date 
+  displayCurrentDateTime();
+  //Load user input from local storage
+  userInputInLocalStorage();
+  
   
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
