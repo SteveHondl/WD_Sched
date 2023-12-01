@@ -50,6 +50,10 @@ $(document).ready(function () {
     }, 1000);
   }
 
+  function updateCurrentTime(){
+    var currentTime = dayjs().hour();
+    console.log("current hour", currentTime);
+  }
 
 
 
@@ -57,6 +61,8 @@ $(document).ready(function () {
   displayCurrentDateTime();
   //Load user input from local storage
   userInputInLocalStorage();
+
+  updateCurrentTime()
   
   
   // TODO: Add a listener for click events on the save button. This code should
