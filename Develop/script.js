@@ -53,16 +53,46 @@ $(document).ready(function () {
   function updateCurrentTime(){
     var currentTime = dayjs().hour();
     console.log("current hour", currentTime);
+
+    // Get all elements with the class 'time-block'
+    var timeBlocks = $(".time-block");
+
+    // Loop through each time block
+  for (var i = 0; i < timeBlocks.length; i++) {
+    // Extract the hour from the time block's id
+    var timeBlockHour = parseInt($(timeBlocks[i]).attr('id').split('-')[1]);
+
+    // Log the timeBlockHour to the console
+    console.log("Time Block Hour:", timeBlockHour);
+
+    var currentHour = dayjs().hour();
+    console.log(currentHour);
+
+
   }
 
-
-
+  }
+  
+  
+  
+  
   //Display current time and date 
   displayCurrentDateTime();
   //Load user input from local storage
   userInputInLocalStorage();
-
+  
   updateCurrentTime()
+
+
+
+      
+    });
+    
+  
+
+
+  
+
   
   
   // TODO: Add a listener for click events on the save button. This code should
@@ -83,4 +113,3 @@ $(document).ready(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
-});
