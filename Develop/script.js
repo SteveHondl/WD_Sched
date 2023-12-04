@@ -11,7 +11,6 @@ function displayCurrentDateTime() {
     $("#currentDay").text(currentDateTime);
   }
   
-  
   // Add a listener for click events on the save button.
   $(".saveBtn").on("click", function() {
     //Locate the ID of the time-block associated with the save button
@@ -21,9 +20,7 @@ function displayCurrentDateTime() {
     //Input is saved to local storage for the entered time-block
     localStorage.setItem(clickedTimeBlockId, userInput);
     //A display to show the user the data has been saved
-    showAlert("Appointment Saved")
-    
-    console.log("Save", clickedTimeBlockId, userInput);
+    showAlert("Appointment Saved") 
     }
   );
 
@@ -36,34 +33,29 @@ function showAlert(message) {
         setTimeout(function() {
         $(".alert").remove();
         //Remove after 1 second
-        }, 2000);
-
-        }
+        }, 1000);
+      }
   
 // Function to load user input from local storage.
 function userInputInLocalStorage() {
-        //Loop each element in the time-block
-        $(".time-block").each(function() {
-        //Get ID attribute of the current element in the time-block
-        var timeBlockId = $(this).attr('id');
-        //Retrieve user input for hour of the day (timeBlockId)
-        var userInput = localStorage.getItem(timeBlockId);
-        //If user input is NOT empty then...
-    if (userInput !== null) {
-        //Insert the saved input (value) into the description box within the current time block
-        $(this).find('.description').val(userInput);
-        }
-       }
-     );
+      //Loop each element in the time-block
+      $(".time-block").each(function() {
+      //Get ID attribute of the current element in the time-block
+      var timeBlockId = $(this).attr('id');
+      //Retrieve user input for hour of the day (timeBlockId)
+      var userInput = localStorage.getItem(timeBlockId);
+      //If user input is NOT empty then...
+  if (userInput !== null) {
+      //Insert the saved input (value) into the description box within the current time block
+      $(this).find('.description').val(userInput);
+      }
+      }
+    );
 }
 //Function to update past, present, and future events on the schedule
 function updateCurrentTime(){
     //Retrieve current hour from dayjs
     var currentTime = dayjs().hour();
-
-    console.log("current hour", currentTime);
-    //Current hour is now variable for comparison
-    var currentHour = currentTime
 
     // Get all elements with the class 'time-block'
     var timeBlocks = $(".time-block");
@@ -73,19 +65,17 @@ function updateCurrentTime(){
     // Extract the hour from the time block's id
     var timeBlockHour = parseInt($(timeBlocks[i]).attr('id').split('-')[1]);
 
-   
-    console.log("Time Block Hour:", timeBlockHour);
    //Compare current hour to timeBlockHour to determine if it has already happened
-  if (timeBlockHour < currentHour){
+  if (timeBlockHour < currentTime){
 
       $(timeBlocks[i]).addClass("past").removeClass("present future");
   }
     //If both variables match in type, it is the current hour
-  else if (timeBlockHour == currentHour){
+  else if (timeBlockHour == currentTime){
       $(timeBlocks[i]).addClass("present").removeClass("past future")
   }
     //If currentHour is less than timeBlockHour, event has not happened yet
- else if (timeBlockHour > currentHour) {
+  else if (timeBlockHour > currentTime) {
      $(timeBlocks[i]).addClass("future").removeClass("past present")
     }
   }
@@ -98,7 +88,7 @@ displayCurrentDateTime();
 userInputInLocalStorage();
 //Update the past, present, and future time blocks relative to current time (visual) 
 updateCurrentTime()
-  
+
 });
     
   
